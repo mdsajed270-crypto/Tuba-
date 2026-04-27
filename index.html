@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>For Tuba 💗</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      padding: 15px;
+    }
+
+    .card {
+      background: white;
+      padding: 25px 20px;
+      border-radius: 20px;
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      z-index: 2;
+    }
+
+    h2 {
+      color: #ff4d6d;
+      font-size: 22px;
+      animation: glow 2s infinite alternate;
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 5px #ff4d6d; }
+      to { text-shadow: 0 0 20px #ff4d6d; }
+    }
+
+    p {
+      font-size: 16px;
+      color: #444;
+      min-height: 100px;
+      line-height: 1.5;
+    }
+
+    button {
+      margin-top: 10px;
+      padding: 12px;
+      width: 100%;
+      font-size: 15px;
+      border: none;
+      border-radius: 12px;
+      background: #ff4d6d;
+      color: white;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #e63950;
+    }
+
+    /* Hearts */
+    .heart {
+      position: absolute;
+      top: -10px;
+      font-size: 18px;
+      color: #ff4d6d;
+      animation: fall linear infinite;
+      opacity: 0.7;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(110vh);
+      }
+    }
+
+    /* Popup */
+    .popup {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.6);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      padding: 15px;
+      z-index: 5;
+    }
+
+    .popup-content {
+      background: white;
+      padding: 20px;
+      border-radius: 15px;
+      width: 100%;
+      max-width: 350px;
+      text-align: center;
+      animation: fadeIn 0.4s ease;
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0; transform: scale(0.85);}
+      to {opacity: 1; transform: scale(1);}
+    }
+
+    .close-btn {
+      margin-top: 15px;
+      background: #999;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="card">
+  <h2>Hey Tuba 🦒🤍</h2>
+  <p id="text"></p>
+  <button onclick="nextMessage()">Next</button>
+  <button onclick="openLetter()">Open Letter 💌</button>
+  <button onclick="openSmile()">Tap if you smiled 😊</button>
+</div>
+
+<!-- 💌 Letter -->
+<div class="popup" id="letterPopup">
+  <div class="popup-content">
+    <h3>For You, My Giraffe 🦒💗</h3>
+    <p>
+      I know you're not feeling okay…  
+      and honestly, I hate seeing you like this.  
+
+      If I could, I’d take all that headache away instantly.  
+
+      So I made this… just for you.  
+      Because you matter to me more than you realize.  
+
+      You don’t have to be strong right now, giraffe…  
+      just rest, breathe, and let yourself heal.  
+
+      I’ll be right here… always rooting for your smile.
+    </p>
+    <button class="close-btn" onclick="closeLetter()">Close</button>
+  </div>
+</div>
+
+<!-- 😊 Smile -->
+<div class="popup" id="smilePopup">
+  <div class="popup-content">
+    <p>
+      There it is… I knew I’d get that smile 😊  
+      <br><br>
+      — Spidey 🕷️💗
+    </p>
+    <button class="close-btn" onclick="closeSmile()">Close</button>
+  </div>
+</div>
+
+<!-- 🎵 Music -->
+<audio id="bgMusic" loop>
+  <source src="tuba.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+let messages = [
+"Hey giraffe… I know you're not feeling okay right now...",
+"I really wish I could take that headache away from you...",
+"So I made this little thing just to make you smile 😊",
+"You don’t have to be strong all the time...",
+"Just rest, close your eyes, and feel better slowly...",
+"And yeah… I kinda miss you more when you're not okay 🤍"
+];
+
+let i = 0;
+
+function typeWriter(text, index = 0) {
+  if (index < text.length) {
+    document.getElementById("text").innerHTML += text.charAt(index);
+    setTimeout(() => typeWriter(text, index + 1), 40);
+  }
+}
+
+function nextMessage() {
+  if (i < messages.length) {
+    document.getElementById("text").innerHTML = "";
+    typeWriter(messages[i]);
+    i++;
+  } else {
+    document.getElementById("text").innerHTML = "Now go rest… I’ll be right here for you, giraffe 💗";
+  }
+}
+
+typeWriter(messages[0]);
+i++;
+
+/* ❤️ Hearts */
+function createHeart() {
+  const heart = document.createElement("div");
+  heart.classList.add("heart");
+  heart.innerHTML = "❤";
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.animationDuration = (Math.random() * 3 + 3) + "s";
+  document.body.appendChild(heart);
+  setTimeout(() => heart.remove(), 6000);
+}
+setInterval(createHeart, 350);
+
+/* 💌 */
+function openLetter() {
+  document.getElementById("letterPopup").style.display = "flex";
+}
+function closeLetter() {
+  document.getElementById("letterPopup").style.display = "none";
+}
+
+/* 😊 */
+function openSmile() {
+  document.getElementById("smilePopup").style.display = "flex";
+}
+function closeSmile() {
+  document.getElementById("smilePopup").style.display = "none";
+}
+
+/* 🎵 Tap to play */
+document.body.addEventListener("click", function () {
+  document.getElementById("bgMusic").play();
+}, { once: true });
+
+</script>
+
+</body>
+</html>
